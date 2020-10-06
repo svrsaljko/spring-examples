@@ -1,0 +1,4 @@
+dev:
+ name: stipeDev
+server:
+ port: 8000
