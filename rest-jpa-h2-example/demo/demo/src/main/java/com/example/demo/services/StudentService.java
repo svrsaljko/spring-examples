@@ -10,12 +10,16 @@ import com.example.demo.dao.StudentRepository;
 import com.example.demo.interfaces.StudentServiceInterface;
 import com.example.demo.model.Student;
 
+/*
+ * Student service class implements StudentService interface
+ * */
 @Service
 public class StudentService implements StudentServiceInterface {
 
 	@Autowired
 	StudentRepository studentRepository;
 
+	
 	@Override
 	public List<Student> getAllStudents() {
 
@@ -29,7 +33,6 @@ public class StudentService implements StudentServiceInterface {
 		return studentRepository.findById(id);
 
 	}
-	
 
 	@Override
 	public void deleteStudent(Long id) {
@@ -38,33 +41,26 @@ public class StudentService implements StudentServiceInterface {
 		studentRepository.deleteById(id);
 
 	}
-	
-	
+
 	@Override
 	public Student createStudent(Student student) {
 		return studentRepository.save(student);
 	}
-	
-	
+
 	@Override
 	public String udpateStudentCollege(Student student) {
 		String message = "New student college submitted successfully";
-		
-		if( studentRepository.existsById(student.getId())) {
-			
+
+		if (studentRepository.existsById(student.getId())) {
+
 			studentRepository.save(student);
-			
-		}else {
-			message="Student not found!";
+
+		} else {
+			message = "Student not found!";
 		}
-		   
+
 		return message;
-		
+
 	}
-	
-	
-	
-	
-	
 
 }

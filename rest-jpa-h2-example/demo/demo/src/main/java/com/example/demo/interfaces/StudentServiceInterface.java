@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import com.example.demo.model.Student;
 
+/*
+ * Methods for CRUD operations in database 
+ * */
 public interface StudentServiceInterface {
 
 	List<Student> getAllStudents();

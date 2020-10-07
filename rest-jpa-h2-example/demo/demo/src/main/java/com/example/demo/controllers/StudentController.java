@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.interfaces.StudentServiceInterface;
 import com.example.demo.model.Student;
 
+
+/*
+ * StudentController class provides REST API for Student
+ * */
 @RestController
 public class StudentController {
 
 	@Autowired
 	StudentServiceInterface studentService;
 
+	
+	// Return all students
 	@GetMapping("student/all")
 	public ResponseEntity<List<Student>> getAllStudents() {
 
@@ -30,6 +36,8 @@ public class StudentController {
 
 	}
 
+	
+	// Return student by id
 	@GetMapping("student")
 	public ResponseEntity<Optional<Student>> getStudentById(@RequestParam Long id) {
 
@@ -37,17 +45,22 @@ public class StudentController {
 
 	}
 
+	
+	// Delete student by id
 	@DeleteMapping("student/{id}")
 	public void deleteStudentById(@PathVariable Long id) {
 
 		studentService.deleteStudent(id);
 	}
 
+	// Create new Student object
 	@PostMapping("student")
 	public ResponseEntity<Student> createNewStudent(@RequestBody Student newStudent) {
 		return ResponseEntity.ok(studentService.createStudent(newStudent));
 	}
-
+	
+	
+	// Update Student college attribute
 	@PatchMapping("student")
 	public ResponseEntity<String> updateStudentCollege(@RequestBody Student student) {
 		return ResponseEntity.ok(studentService.udpateStudentCollege(student) );
