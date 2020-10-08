@@ -3,12 +3,17 @@ package com.example.demo.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.StudentRepository;
 import com.example.demo.interfaces.StudentServiceInterface;
 import com.example.demo.model.Student;
+
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 
 /*
  * Student service class implements StudentService interface
@@ -19,7 +24,16 @@ public class StudentService implements StudentServiceInterface {
 	@Autowired
 	StudentRepository studentRepository;
 
-	
+	@Autowired
+	MeterRegistry meterRegistry;
+
+	Counter createStudentCounter;
+
+	@PostConstruct
+	void init() {
+		createStudentCounter = Counter.builder("student.create.counter").register(meterRegistry);
+	}
+
 	@Override
 	public List<Student> getAllStudents() {
 
@@ -44,6 +58,7 @@ public class StudentService implements StudentServiceInterface {
 
 	@Override
 	public Student createStudent(Student student) {
+		createStudentCounter.increment();
 		return studentRepository.save(student);
 	}
 
